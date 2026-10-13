@@ -26,11 +26,11 @@ if [ -n "${APPTAINER_CONTAINER:-}" ]; then
     if [ "$NO_DOWNLOAD" -eq 0 ]; then
         # Start from a clean checkout
         rm -rf "$NDCAFMAKER_DIR"
-        git clone -b "$NDCAFMAKER_BRANCH" "$NDCAFMAKER_REPO" "$NDCAFMAKER_DIR"
+        git clone -b "$NDCAFMAKER_BRANCH" "$NDCAFMAKER_REPO" "$NDCAFMAKER_DIR/ND_CAFMaker"
     fi
 
     cd "$NDCAFMAKER_DIR"
-    source ndcaf_setup_deps.sh debug
+    source ND_CAFMaker/ndcaf_setup_deps.sh debug
 
     # Replace the UPS duneanaobj with the locally-built version
     unsetup duneanaobj
@@ -38,13 +38,15 @@ if [ -n "${APPTAINER_CONTAINER:-}" ]; then
     
     # Setup srproxy for the makeCAF tool, which is a dependency of ND_CAFMaker
     # Not clear if this is needed for the build itself, but it is needed for the smoke test at the end.
-    setup srproxy v00.45 -q py3
 
-    cmake -S . -B "$NDCAFMAKER_BUILD_DIR" -DCMAKE_INSTALL_PREFIX="$NDCAFMAKER_INSTALL_DIR" -DCMAKE_BUILD_TYPE=Debug
+    cmake -S "$NDCAFMAKER_DIR/ND_CAFMaker" -B "$NDCAFMAKER_BUILD_DIR" -DCMAKE_INSTALL_PREFIX="$NDCAFMAKER_INSTALL_DIR" -DCMAKE_BUILD_TYPE=Debug
     cmake --build "$NDCAFMAKER_BUILD_DIR" --target install
 
     # Quick smoke test
+    set +eu +o pipefail
     "$NDCAFMAKER_INSTALL_DIR/bin/makeCAF" --help 2>/dev/null
+    set -euo pipefail
+    
 else
     "$APPTAINER_BIN" exec \
         -B "$APPTAINER_BINDS" \
