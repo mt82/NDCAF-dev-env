@@ -2,3 +2,6 @@ duneanaobj/*
 ND_CAFMaker/*
 ana/*
 ups/*
+debug/fnal-dev-sl7-gdb/fnal-dev-sl7-gdb.sif
+.vscode/*
+!.vscode/launch.json
