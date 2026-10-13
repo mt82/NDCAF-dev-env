@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "GDB Remote (Apptainer)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/ND_CAFMaker/install/bin/makeCAF",
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "miDebuggerServerAddress": "localhost:2000",
+            "stopAtEntry": true,
+            "externalConsole": false,
+            "setupCommands": [
+                {
+                    "description": "Pretty printing STL",
+                    "text": "-enable-pretty-printing"
+                }
+            ]
+        }
+    ]
+}

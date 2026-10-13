@@ -1,0 +1,14 @@
+Bootstrap: docker
+From: fermilab/fnal-dev-sl7:latest
+
+%post
+    # Fix repository OSG: usa mirror FNAL
+    sed -i "s,#baseurl=https://repo.opensciencegrid.org/osg,baseurl=https://linux-mirrors.fnal.gov/linux/osg,g" /etc/yum.repos.d/osg.repo
+    sed -i "s,mirrorlist=https://repo.opensciencegrid.org/mirror/osg,#mirrorlist=https://linux-mirrors.fnal.gov/linux/osg,g" /etc/yum.repos.d/osg.repo
+
+    # Pulisci cache e aggiorna metadata
+    yum clean all
+    yum makecache
+
+    # Installa strumenti di debug
+    yum install -y gdb gdb-gdbserver
