@@ -15,7 +15,7 @@ DUNEANAOBJ_BUILD_DIR="$DUNEANAOBJ_DIR/build"
 
 # --- ND_CAFMaker ---
 NDCAFMAKER_REPO="https://github.com/DUNE/ND_CAFMaker.git"
-NDCAFMAKER_BRANCH="main"
+NDCAFMAKER_BRANCH="130-create-a-branch-filler-for-sandreco-experimental"
 NDCAFMAKER_DIR="$ROOTFOLDER/ND_CAFMaker"
 NDCAFMAKER_BUILD_DIR="$NDCAFMAKER_DIR/build"
 NDCAFMAKER_INSTALL_DIR="$NDCAFMAKER_DIR/install"
@@ -37,5 +37,36 @@ DEBUG_CONTAINER_IMAGE="$ROOTFOLDER/debug/fnal-dev-sl7-gdb/fnal-dev-sl7-gdb.sif"
 APPTAINER_BINDS="/cvmfs,/exp,/nashome,/pnfs/dune,/opt,/run/user,/etc/hostname,/etc/hosts,/etc/krb5.conf"
 
 # --- Run configuration ---
-FCL_FILE="$ROOTFOLDER/example.fcl"
 ANA_DIR="$ROOTFOLDER/ana"
+
+# --- ND_CAFMaker input files ---
+INPUT_PATH="/exp/dune/data/users/jlarkin/caftest/"
+
+# Base run ID; all per-flavour variables default to this (override individually if needed)
+RUNID="000003"
+
+# Per-step paths (default to INPUT_PATH; override individually if files are in different directories)
+PATH_GHEP="$INPUT_PATH"
+PATH_SPINE="$INPUT_PATH"
+PATH_TMS="$INPUT_PATH"
+PATH_EDEPSIM="$INPUT_PATH"
+
+PREFIX_GHEP_NDLARFID="MiniProdN5p3_NDComplex_FHC.genie.ndlarfid.sanddrift."
+PREFIX_GHEP_ROCKANT="MiniProdN5p3_NDComplex_FHC.genie.rockantindlarfid.sanddrift."
+RUNID_GHEP="$RUNID"
+SUFFIX_GHEP=".GHEP.root"
+
+PREFIX_SPINE="MiniProdN5p3_NDComplex_FHC.spine.full.sanddrift."
+RUNID_SPINE="$RUNID"
+SUFFIX_SPINE=".MLRECO_SPINE.hdf5"
+
+PREFIX_TMS="MiniProdN5p3_NDComplex_FHC.tmsreco.full.sanddrift."
+RUNID_TMS="$RUNID"
+SUFFIX_TMS=".TMSRECO.root"
+
+PREFIX_EDEPSIM="MiniProdN5p3_NDComplex_FHC.spill.full.sanddrift."
+RUNID_EDEPSIM="$RUNID"
+SUFFIX_EDEPSIM=".EDEPSIM_SPILLS.root"
+
+OUTPUT_CAF="$ANA_DIR/output.root"
+FCL_CAFMAKER_INPUT="$ROOTFOLDER/input.fcl"
